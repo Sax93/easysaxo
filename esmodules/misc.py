@@ -1,0 +1,57 @@
+from config import easysaxo
+from colorama import Fore, Style
+import time, importlib, os
+
+# What's new
+def whats_new():
+    print(
+        f"\n===== {Fore.CYAN}What's New!{Style.RESET_ALL} ({Fore.YELLOW}{easysaxo.name} v{easysaxo.ver}{Style.RESET_ALL}) =====\n"
+        f"1. Added commands: {Fore.GREEN}clear{Style.RESET_ALL}, {Fore.GREEN}whatsnew{Style.RESET_ALL}.\n"
+        f"2. Enhanced dynamic help system ({Fore.BLUE}help <command>{Style.RESET_ALL}).\n"
+        f"3. Architectural upgrades: Command Registry, Lazy Loading, Rich Tables, Async Prompts."
+    )
+
+# Time and Date
+def hrs():
+    print(f"Time: {time.strftime('%H:%M:%S')}.")
+    print(f"Date: {time.strftime('%Y-%m-%d')}.")
+
+# Status Handler for modules
+
+class StatusHandler:
+    def __init__(self, label_width=25):
+        self.ok = f"{Fore.GREEN}OK{Style.RESET_ALL}"
+        self.er = f"{Fore.RED}ERROR{Style.RESET_ALL}"
+        self.label_width = label_width
+
+    def print_status(self, label: str, success: bool, extra_info: str = ""):
+        status = self.ok if success else self.er
+        print(f"{label:<{self.label_width}}: [{status}] {extra_info}".strip())
+
+    def check_imports(self, modules: list[str]):
+        all_success = True
+        for mod in modules:
+            try:
+                importlib.import_module(mod)
+                self.print_status(f"For import module {Fore.BLUE}{mod.upper()}{Style.RESET_ALL}", success=True)
+            except ImportError as e:
+                self.print_status(f"For import module {Fore.BLUE}{mod.upper()}{Style.RESET_ALL}", success=False, extra_info=str(e))
+                all_success = False
+        return all_success
+
+StHd = StatusHandler(label_width=20)
+required_modules = [
+    "os", "sys", "re", "time", "subprocess", "platform", "random", "locate",
+    "psutil", "json", "math", "pygame", "threading", "socket", "colorama", "rich", "prompt_toolkit"
+]
+
+def module_importing():
+    StHd.check_imports(required_modules)
+    print()
+
+module_importing()
+time.sleep(2)
+
+os.system("cls" if os.name == "nt" else "clear")
+
+# misc.py shall live argargagrgragragra
