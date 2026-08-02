@@ -88,6 +88,8 @@ except ImportError:
 # Core main loop
 #=================================================
 def Core(session_info=None):
+    enable_ee = False
+    scee = True
     import json
     from pathlib import Path
     
@@ -158,12 +160,12 @@ def Core(session_info=None):
         
         if cmd in translations: 
             cmd = translations[cmd]
-
+        
         if cmd in ["exit", "quit"]:
             SessionManager.save_session(ThreadData.current_user)
             break
         elif cmd in COMMAND_REGISTRY: COMMAND_REGISTRY[cmd](arg)
-        elif cmd not in COMMAND_REGISTRY:
+        elif cmd not in COMMAND_REGISTRY and enable_ee:
             if cmd == "getmeaneasteregg": commands.e1()
             elif cmd in ["noeasteregg", "falseget", "lookatthis", "lookatts"]: commands.e2()
             elif cmd == "osaka": commands.e3()
@@ -171,6 +173,10 @@ def Core(session_info=None):
                 if commands.ee4: commands.e4()
             elif cmd in ["traceback", "error", "locateerror", "errorloc"]: commands.e5()
             else: print(f"{Fore.RED}Unknown command. Type 'help' for assistance.{Style.RESET_ALL}")
+        elif cmd in ["secretenable", "enable_ee", "eastereggenable"] and scee:
+            enable_ee = True
+            scee = False
+            print(f"{Fore.LIGHTBLACK_EX}Something happened.{Style.RESET_ALL} You have to find it out.")
         else: print(f"{Fore.RED}Unknown command. Type 'help' for assistance.{Style.RESET_ALL}")
 
 if __name__ == "__main__":

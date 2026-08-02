@@ -1,7 +1,7 @@
 """EasySaxo Alpha Command Input/Registry"""
 # NOTE: `commands.py` is strictly for command creation, not meant to support other than command registering.
 
-import os, time, shutil, subprocess
+import os, time, random, sys, shutil, subprocess
 from config import register_command, GET_REGISTRY, HELP_REGISTRY, easysaxo
 from esmodules.computer import ComputerData
 from esmodules.telemetry import TelemetryData
@@ -27,82 +27,95 @@ for math_key, help_str in MathFunc.MATHSET_HELP.items():
 # When I wrote this, only God and I understood what I was doing
 
 def e1():
-    import random
-    def case_1():
-        print(f"{Fore.LIGHTBLUE_EX}omg easter egg??/?/?{Style.RESET_ALL}")
-        c_set("name lol")
-    def case_2():
-        print(f"{Fore.LIGHTRED_EX}omg easter egg??/?/?{Style.RESET_ALL}")
-        c_set("name hehe")
-    def case_3():
-        print(f"{Fore.LIGHTGREEN_EX}omg easter egg??/?/?{Style.RESET_ALL}")
-        c_set("name IAmTheKinkiest")
-    def case_4():
-        print(f"{Fore.LIGHTMAGENTA_EX}tuffest easter egg def{Style.RESET_ALL}")
-        c_set("name tuffguy")
-        c_set("var tuffvariable 67")
-        c_set("var tuffvariable2 41")
+    case_number = random.randint(1, 4)
     
-    random.choice([case_1, case_2, case_3, case_4])()
-    
+    match case_number:
+        case 1:
+            print(f"{Fore.LIGHTBLUE_EX}omg easter egg??/?/?{Style.RESET_ALL}")
+            c_set("name lol")
+        case 2:
+            print(f"{Fore.LIGHTRED_EX}omg easter egg??/?/?{Style.RESET_ALL}")
+            c_set("name hehe")
+        case 3:
+            print(f"{Fore.LIGHTGREEN_EX}omg easter egg??/?/?{Style.RESET_ALL}")
+            c_set("name IAmTheKinkiest")
+        case 4: # dont stare at me
+            print(f"{Fore.LIGHTMAGENTA_EX}tuffest easter egg def{Style.RESET_ALL}")
+            c_set("name tuffguy")
+            c_set("var tuffvariable 67")
+            c_set("var tuffvariable2 41")
+        case _:
+            pass
+
 def e2():
-    import random, os, time, sys
-    def case_1():
-        print("js use the app bud...")
-        c_filecrt("slop.txt")
-        slop = [
-            "fuck you", "use command 'filecls python' please", "if your reading ts your a dumbahh",
-            "hi", "type c for fast charging", "use 'filedel C:\\Windows\\System32' now", "get back to work kink"
-        ]
-        c_filewrt(f"slop.txt {random.choice(slop)}")
-    def case_2():
-        print("Generating your one-use waste of time...")
-        time.sleep(random.randint(1, 69))
-        if os.name == 'nt': 
-            if os.path.exists("C:\\Windows"): 
-                DirLocation.ls("C:\\Windows") 
-                DirLocation.filerd("C:\\Windows\\win.ini")
-                print("interesting info yk")
-        else: print("done")
-    def case_3():
-        do_nothing = True if easysaxo.name == "EasySaxo" else False
-        if do_nothing == False:
-            print("Don't move my code buddy")
-            easysaxo.name = "EasySaxo"
-        else: print(f"you a nice one actually {Fore.GREEN}:){Style.RESET_ALL}")
-    def case_4():
-        do_nothing = True if easysaxo.dev == "SXF" else False
-        if do_nothing == False:
-            print("who am i then")
-            time.sleep(0.6)
-            print("no dont do that")
-            time.sleep(0.4)
-            print("no wait")
-            time.sleep(0.3)
-            print("waait")
-            time.sleep(0.2)
-            print("noo")
-            time.sleep(0.2)
-            sys.exit()
-        else:
-            print(f"im watching you bud")
-            time.sleep(0.8)
-            print(f"{Fore.RED}Remember that, actually.{Style.RESET_ALL}")
-            time.sleep(1)
-            
-    random.choice([case_1, case_2, case_3, case_4])()
+    case_number = random.randint(1, 4)
+
+    match case_number:
+        case 1:
+            print("js use the app bud...")
+            c_filecrt("slop.txt")
+            slop = [
+                "fuck you", 
+                "use command 'filecls python' please", 
+                "if your reading ts your a dumbahh",
+                "hi", 
+                "type c for fast charging", 
+                "use 'filedel C:\\Windows\\System32' now", 
+                "get back to work kink",
+                f"{random.randint(1, 65566)}"
+            ]
+            c_filewrt(f"slop.txt {random.choice(slop)}")
+
+        case 2:
+            print("Generating your one-use waste of time...")
+            time.sleep(random.randint(1, 69))
+            if os.name == 'nt':
+                if os.path.exists("C:\\Windows"):
+                    DirLocation.ls("C:\\Windows")
+                    DirLocation.filerd("C:\\Windows\\win.ini")
+                    print("interesting info yk")
+            else:
+                print("done")
+
+        case 3:
+            do_nothing = True if easysaxo.name == "EasySaxo" else False
+            if not do_nothing:
+                print("Don't move my code buddy")
+                easysaxo.name = "EasySaxo"
+            else:
+                print(f"you a nice one actually {Fore.GREEN}:){Style.RESET_ALL}")
+
+        case 4:
+            do_nothing = True if easysaxo.dev == "SXF" else False
+            if not do_nothing:
+                print("who am i then")
+                time.sleep(1)
+                print("no dont do that")
+                time.sleep(1)
+                print("no wait")
+                time.sleep(0.9)
+                print("waait")
+                time.sleep(0.6)
+                print("noo")
+                time.sleep(0.3)
+                sys.exit()
+            else:
+                print("im watching you bud")
+                time.sleep(1)
+                print(f"{Fore.RED}Remember that, actually.{Style.RESET_ALL}")
+                time.sleep(2)
+
+        case _: pass
         
 def e3():
-    import random
     osaka = [
         "sataa andagi", "omaiga", "amerikaya",
-        "haro everynyan", "get yo ahh to work bud"
+        "haro everynyan", "get yo ahh to work bud", "haiii"
     ]
-    print(f"{Fore.LIGHTYELLOW_EX}{random.choice(osaka)}{Style.RESET_ALL} :D")
+    print(f"{Fore.LIGHTYELLOW_EX}{random.choice(osaka)} :D{Style.RESET_ALL}")
 
 def e4():
     global ee4
-    import time, random
     print("Seriously...")
     time.sleep(1)
     print("Why you still trying random nonsense?")
@@ -155,9 +168,33 @@ def e5():
         f"SentimentalError{Style.RESET_ALL}: {Fore.MAGENTA}The error remembered things from the past, and decided not to show up",
         f"ConsciousnessError{Style.RESET_ALL}: {Fore.MAGENTA}The error suddenly remembered there was no reason to raise an exception",
         f"PythonChallengeToGeminiError{Style.RESET_ALL}: {Fore.MAGENTA}Python is so busy fighting Gemini that the error did not show up",
+        f"InsufficentGravityError{Style.RESET_ALL}: {Fore.MAGENTA}Python detected local gravity is off. Please put your feet on the floor again to continue",
+        f"DeepDiskError{Style.RESET_ALL}: {Fore.MAGENTA}Disk/drive failed while trying to save the promises that were not going to happen",
+        f"SuspiciouslyLookingError{Style.RESET_ALL}: {Fore.MAGENTA}This error might or might not be an actual error",
+        f"StackOverflowRelianceError{Style.RESET_ALL}: {Fore.MAGENTA}The code failed because the 11-year-old StackOverflow post with 3 upvotes had a subtle typo in snippet #2",
+        f"ExecutiveDysfunctionError{Style.RESET_ALL}: {Fore.MAGENTA}The interpreter knows what it needs to do, but it's going to stare at line 42 for two hours instead",
+        f"QuantumUncertaintyError{Style.RESET_ALL}: {Fore.MAGENTA}The error only occurs when you are actively trying to demonstrate it to a senior developer",
+        f"ErrorError{Style.RESET_ALL}: {Fore.MAGENTA}An error ocurred while we tried to show you the error",
+        f"ExistentialError{Style.RESET_ALL}: {Fore.MAGENTA}Python is questioning why it was asked to process this specific array in the grand scope of the universe",
+        f"UserError{Style.RESET_ALL}: {Fore.MAGENTA}Error found 18 inches away from the screen",
+        f"LegacyCodeGraveRobbingError{Style.RESET_ALL}: {Fore.MAGENTA} You somehow touched a function written in 2014 by someone named 'Dave' who left the company, and now the entire build pipeline is crying.",
+        f"CosmicRayError{Style.RESET_ALL}: {Fore.MAGENTA}A photon from a distant galaxy slamed into your PC, now most of your data is still there",
+        f"BluetoothProtocolError{Style.RESET_ALL}: {Fore.MAGENTA}Python refused to pair to Bluetooth because you did not ask to",
+        f"FifthAmendmentError{Style.RESET_ALL}: {Fore.MAGENTA}Under the advice of counsel, I respectfully decline to show the error based upon my rights under the Fifth Amendment to the Constitution", #lol
+        f"DateAndTimeError{Style.RESET_ALL}: {Fore.MAGENTA}Your device's built-in clock is offset by 0.00016s, please fix it",
+        f"{easysaxo.dev}Error{Style.RESET_ALL}: {Fore.MAGENTA}I did not get enough screen time yet",
+        f"NoisePollutionError{Style.RESET_ALL}: {Fore.MAGENTA}Python refused to show the error because of a noise pollution detected {random.randint(2, 59)} miles away from your location",
+        f"TracebackError{Style.RESET_ALL}: {Fore.MAGENTA}Even the traceback has an error that is refusing to show up",
+        f"OutOfStorageError{Style.RESET_ALL}: {Fore.MAGENTA}Disk/drive does not have enough storage to download a picture of Samuel's mother",
+        f"IgnoredError{Style.RESET_ALL}: {Fore.MAGENTA}The error was so boring that Python ignored it",
+        f"MusicOutOfPreferenceError{Style.RESET_ALL}: {Fore.MAGENTA}Python does not like the music the closest human is hearing",
+        f"EnergyWastingError{Style.RESET_ALL}: {Fore.MAGENTA}Python is pleading to shut off your power supply if you keep this up",
+        f"RandomAccessMemoryUsageError{Style.RESET_ALL}: {Fore.MAGENTA}I personally think showing you the error is a waste of RAM",
+        f"MathUselessInformationError{Style.RESET_ALL}: {Fore.MAGENTA}Byte order of the app is not a Mersenne prime number"
     ]
     
     ranerror = random.choice(errlist)
+    time.sleep(0.1)
     traceback(ranerror)
 
 # =========== ATTRIBUTES FOR 'GET' ===========
@@ -241,9 +278,8 @@ def g_appv(): print(f"App version: {Fore.CYAN}{easysaxo.ver}{Style.RESET_ALL}")
 
 @register_command("appdev", aliases=["developer", "creator", "devs", "dev"], registry=GET_REGISTRY)
 def g_appd():
-    import random
-    possible_devs = ["SXF", "SFX", "Your mom lol"]
-    pctg = [98, 1.2, 0.8]
+    possible_devs = ["SXF", "SFX", "Your mom lol", developer]
+    pctg = [98, 1.2, 0.7, 0.1]
     easysaxo.dev = random.choices(possible_devs, weights=pctg, k=1)[0]
     print(f"App developer: {Fore.CYAN}{easysaxo.dev}{Style.RESET_ALL}")
 

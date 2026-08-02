@@ -8,9 +8,7 @@ import time, importlib, os
 def whats_new():
     print(
         f"\n===== {Fore.CYAN}What's New!{Style.RESET_ALL} ({Fore.YELLOW}{easysaxo.name} v{easysaxo.ver}{Style.RESET_ALL}) =====\n"
-        f"1. Added commands: {Fore.GREEN}check, dircrt, dirdel{Style.RESET_ALL}.\n"
-        f"2. Added more {Fore.LIGHTGREEN_EX}aliases{Style.RESET_ALL}.\n"
-        f"3. Fixed {Fore.LIGHTGREEN_EX}filecrt{Style.RESET_ALL} bugs.\n"
+        f"1. Fixed {Fore.LIGHTGREEN_EX}code{Style.RESET_ALL} bugs.\n"
     )
 
 # Time and Date
