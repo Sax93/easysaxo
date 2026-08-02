@@ -2,6 +2,9 @@
 # JSON and Regex Processing
 #=================================================
 
+# `jsonregex.py` ONLY FOR JSON AND REGEX COMMANDS
+# literally the most useless file ever
+
 from esmodules.dirloct import DirLocation
 import os, json, re
 from colorama import Fore, Style

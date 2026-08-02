@@ -2,13 +2,15 @@ from config import easysaxo
 from colorama import Fore, Style
 import time, importlib, os
 
+# `misc.py` may handle miscellaneous data and functions.
+
 # What's new
 def whats_new():
     print(
         f"\n===== {Fore.CYAN}What's New!{Style.RESET_ALL} ({Fore.YELLOW}{easysaxo.name} v{easysaxo.ver}{Style.RESET_ALL}) =====\n"
-        f"1. Added commands: {Fore.GREEN}clear{Style.RESET_ALL}, {Fore.GREEN}whatsnew{Style.RESET_ALL}.\n"
-        f"2. Enhanced dynamic help system ({Fore.BLUE}help <command>{Style.RESET_ALL}).\n"
-        f"3. Architectural upgrades: Command Registry, Lazy Loading, Rich Tables, Async Prompts."
+        f"1. Added commands: {Fore.GREEN}check, dircrt, dirdel{Style.RESET_ALL}.\n"
+        f"2. Added more {Fore.LIGHTGREEN_EX}aliases{Style.RESET_ALL}.\n"
+        f"3. Fixed {Fore.LIGHTGREEN_EX}filecrt{Style.RESET_ALL} bugs.\n"
     )
 
 # Time and Date
@@ -41,7 +43,7 @@ class StatusHandler:
 
 StHd = StatusHandler(label_width=20)
 required_modules = [
-    "os", "sys", "re", "time", "subprocess", "platform", "random", "locate",
+    "os", "sys", "re", "time", "subprocess", "platform", "random", "locale",
     "psutil", "json", "math", "pygame", "threading", "socket", "colorama", "rich", "prompt_toolkit"
 ]
 

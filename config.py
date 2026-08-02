@@ -1,17 +1,15 @@
 """EasySaxo Alpha Main configuration"""
 
 import sys
-from colorama import Fore, Style, just_fix_windows_console
-
-just_fix_windows_console()
 
 class App:
     def __init__(self, name, ver):
         self.name = name
         self.ver = ver
         self.dev = "SXF"
-
-easysaxo = App("EasySaxo", "Alpha 1.0")
+        self.problem = "in the chair"
+        
+easysaxo = App("EasySaxo", "Alpha 1.02") # yes im that lazy to write this ever again
 
 COMMAND_REGISTRY = {}
 GET_REGISTRY = {}
@@ -28,3 +26,4 @@ def register_command(name, aliases=None, help_text=None, registry=COMMAND_REGIST
         return func
     return decorator
 
+# its ugly to be the 29th codeline in a config script. att, a pyzon comment 

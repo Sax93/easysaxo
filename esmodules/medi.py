@@ -2,6 +2,8 @@
 # 8. Multimedia
 #=================================================
 
+#`medi.py` ONLY FOR MULTIMEDIA FILE HANDLING COMMAND DEFINING
+
 import os
 from esmodules.dirloct import DirLocation
 from colorama import Fore, Style
@@ -36,3 +38,5 @@ class MediaData:
                 print(f"{Fore.GREEN}Audio stopped.{Style.RESET_ALL}")
             else: print(f"{Fore.YELLOW}No audio is currently playing.{Style.RESET_ALL}")
         except Exception as e: print(f"{Fore.RED}Error stopping audio: {e}{Style.RESET_ALL}")
+        
+# holy useless code

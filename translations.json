@@ -1,0 +1,98 @@
+{
+  "en": {
+    "help": "help",
+    "exit": "exit",
+    "quit": "exit",
+    "time": "time",
+    "save": "save",
+    "load": "load"
+  },
+  "ja": {
+    "へるぷ": "help",
+    "herupu": "help",
+    "たすけ": "help",
+    "tasuke": "help",
+    "おわる": "exit",
+    "owaru": "exit",
+    "じかん": "time",
+    "jikan": "time",
+    "ほぞん": "save",
+    "hozon": "save",
+    "よみこみ": "load",
+    "yomikomi": "load"
+  },
+  "es": {
+    "ayuda": "help",
+    "salir": "exit",
+    "tiempo": "time",
+    "hora": "time",
+    "guardar": "save",
+    "cargar": "load"
+  },
+  "fr": {
+    "aide": "help",
+    "quitter": "exit",
+    "temps": "time",
+    "heure": "time",
+    "sauvegarder": "save",
+    "charger": "load"
+  },
+  "de": {
+    "hilfe": "help",
+    "beenden": "exit",
+    "zeit": "time",
+    "speichern": "save",
+    "laden": "load"
+  },
+  "pt": {
+    "ajuda": "help",
+    "sair": "exit",
+    "tempo": "time",
+    "salvar": "save",
+    "carregar": "load"
+  },
+  "it": {
+    "aiuto": "help",
+    "esci": "exit",
+    "tempo": "time",
+    "ora": "time",
+    "salva": "save",
+    "carica": "load"
+  },
+  "ru": {
+    "помощь": "help",
+    "pomosh": "help",
+    "выход": "exit",
+    "vyhod": "exit",
+    "время": "time",
+    "vremya": "time",
+    "сохранить": "save",
+    "sohranit": "save",
+    "загрузить": "load",
+    "zagruzit": "load"
+  },
+  "zh": {
+    "帮助": "help",
+    "bangzhu": "help",
+    "退出": "exit",
+    "tuichu": "exit",
+    "时间": "time",
+    "shijian": "time",
+    "保存": "save",
+    "baocun": "save",
+    "加载": "load",
+    "jiazai": "load"
+  },
+  "ko": {
+    "도움말": "help",
+    "doummal": "help",
+    "나가기": "exit",
+    "nagagi": "exit",
+    "시간": "time",
+    "sigan": "time",
+    "저장": "save",
+    "jeojang": "save",
+    "불러오기": "load",
+    "bulleoodi": "load"
+  }
+}

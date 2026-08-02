@@ -2,9 +2,20 @@
 # Computer Data
 #=================================================
 
-from main import RICH_AVAILABLE, console, Table
+# `computer.py` ONLY FOR COMPUTER COMMAND DEFINING
+
+# dark magic, only watching
+
 import os, sys, platform, subprocess, getpass, socket, locale
 from colorama import Fore, Style
+
+try:
+    from rich.console import Console
+    from rich.table import Table
+    console = Console()
+    RICH_AVAILABLE = True
+except ImportError:
+    RICH_AVAILABLE = False
 
 class ComputerData:
     @staticmethod
@@ -110,7 +121,7 @@ class ComputerData:
             table.add_column("Free", style="green")
             table.add_column("Usage", style="magenta")
             
-            for p in partitions:
+            for p in partitions: #what do u call 2 partitions in math? a pp hahalol
                 try:
                     u = psutil.disk_usage(p.mountpoint)
                     table.add_row(p.mountpoint, p.fstype, f"{u.total / (1024**3):.2f} GB", f"{u.free / (1024**3):.2f} GB", f"{u.percent}%")
@@ -146,13 +157,14 @@ class ComputerData:
             else:
                 print(f"Battery: {Fore.CYAN}No battery detected{Style.RESET_ALL}")
         except Exception:
-            print(f"Battery: {Fore.RED}Unable to detect battery status{Style.RESET_ALL}")
+            print(f"Battery: {Fore.RED}Unable to detect battery status{Style.RESET_ALL}") # poor
 
     @staticmethod
     def getos():
         print(f"Operating System: {Fore.BLUE}{platform.system()} {platform.release()}{Style.RESET_ALL}")
         print(f"OS Version: {Fore.BLUE}{platform.version()}{Style.RESET_ALL}")
         print(f"Full Platform Tag: {Fore.BLUE}{platform.platform()}{Style.RESET_ALL}")
+        # unless you barely have a kboard
 
     @staticmethod
     def getpythoninfo():
@@ -201,3 +213,5 @@ class ComputerData:
             print("\nTop 5 CPU-Consuming Processes:")
             for p in processes:
                 print(f"  PID: {p.info['pid']} | Name: {Fore.CYAN}{p.info['name']}{Style.RESET_ALL} | CPU: {p.info['cpu_percent']}% | RAM: {p.info['memory_percent']:.2f}%")
+
+# note: 8 out of 10 intel celeron inside cpus crash here

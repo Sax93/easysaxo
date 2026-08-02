@@ -2,8 +2,10 @@
 # Telemetry and Identification Access
 #=================================================
 
+# `telemetry.py` ONLY FOR TELEMETRY COMMAND DEFINING
+
 import time, socket, uuid, re
-import urllib
+import urllib.request
 from colorama import Fore, Style
 
 class TelemetryData:
@@ -87,3 +89,5 @@ class TelemetryData:
             print(f"Ping: {Fore.CYAN}{st.results.ping} ms{Style.RESET_ALL}")
         except Exception as e:
             print(f"{Fore.RED}Speed test failed: {e}{Style.RESET_ALL}")
+            
+# broo chill i aint stealing ur shi

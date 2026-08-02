@@ -2,6 +2,9 @@
 # Math functions
 #=================================================
 
+# `mathf.py` ONLY FOR MATH FUNCTIONS COMMAND DEFINING
+# math shii and stuff ig
+
 import ast, random, math, operator
 from colorama import Fore, Style
 
@@ -40,6 +43,7 @@ class MathFunc:
 
     @staticmethod
     def _eval_ast_node(node):
+        # WARNING: van rossum be frowning at ts
         if isinstance(node, ast.Constant):
             if isinstance(node.value, (int, float)): return node.value
             raise ValueError("Only numeric constants allowed.")
@@ -77,7 +81,7 @@ class MathFunc:
     @staticmethod
     def getmath():
         print(f"{Fore.BLUE}MathSet{Style.RESET_ALL}:\n",
-              f"{Fore.CYAN}sqrt, sin, cos, tan, log, log10, pi, e{Style.RESET_ALL}",
+              f"{Fore.CYAN}sqrt, sin, cos, tan, log, log10, pi, e{Style.RESET_ALL}.\n",
               f"You can use {Fore.GREEN}help <mathset>{Style.RESET_ALL} to dive deeper in MathSet usage.")
     
     @staticmethod
@@ -118,3 +122,5 @@ class MathFunc:
             print(f"{Fore.BLUE}== USER VARIABLES =={Style.RESET_ALL}")
             for k, v in user_vars.items(): print(f"{Fore.CYAN}{k:<15}{Style.RESET_ALL}: {Fore.GREEN}{v}{Style.RESET_ALL}")
         else: print(f"{Fore.YELLOW}No custom variables saved yet.{Style.RESET_ALL}")
+        
+# love math tho

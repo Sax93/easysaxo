@@ -2,12 +2,14 @@
 # Threading + Session Saving-Loading
 #=================================================
 
+# `heavyholder.py` ONLY FOR COMPLEX TASK & OVERLAP COMMAND DEFINING
+# you know what else is heavy?
+
 import threading, os, json, time
 from colorama import Fore, Style
 from esmodules.dirloct import base_dir, DirLocation
 from esmodules.mathf import MathFunc
 
-# Try importing prompt_toolkit for timer alerts
 try:
     from prompt_toolkit.formatted_text import HTML
     from prompt_toolkit import print_formatted_text
@@ -19,6 +21,8 @@ except ImportError:
 
 class ThreadData:
     current_user = "User"
+    current_pswd = None
+    # why storing this here? to make ezsaxo less comprehensible
 
     @staticmethod
     def getthreads():
@@ -43,27 +47,54 @@ class SessionManager:
     active_session_file = os.path.join(base_dir, "session.json")
 
     @staticmethod
-    def save_session(user_name: str, filepath: str = None):
+    def save_session(user_name: str = None, filepath: str = None):
+        uname = user_name if user_name else ThreadData.current_user
         target = DirLocation._resolve_path(filepath) if filepath else SessionManager.active_session_file
         user_vars = {k: v for k, v in MathFunc.mathset.items() if k not in MathFunc._reserved}
         try:
-            with open(target, "w", encoding="utf-8") as f: json.dump({"user_name": user_name, "variables": user_vars}, f, indent=4)
+            with open(target, "w", encoding="utf-8") as f:
+                json.dump({
+                    "user_name": uname, 
+                    "variables": user_vars, 
+                    "password": ThreadData.current_pswd # Use ThreadData's password variable!
+                }, f, indent=4)
             SessionManager.active_session_file = target
             print(f"{Fore.GREEN}Session saved successfully to '{os.path.basename(target)}'.{Style.RESET_ALL}")
         except Exception as e: print(f"{Fore.RED}Error saving session: {e}{Style.RESET_ALL}")
 
     @staticmethod
-    def load_session(filepath: str = None) -> str:
+    def load_session(filepath: str = None) -> dict:
         target = DirLocation._resolve_path(filepath) if filepath else SessionManager.active_session_file
-        if not os.path.exists(target): return "User"
+        default_data = {"user_name": "User", "password": None}
+
+        if not os.path.exists(target): 
+            return default_data
+
         try:
-            with open(target, "r", encoding="utf-8") as f: data = json.load(f)
+            # Check if file is empty (0 bytes) before attempting json.load
+            if os.path.getsize(target) == 0:
+                return default_data
+
+            with open(target, "r", encoding="utf-8") as f: 
+                data = json.load(f)
+
             user_name = data.get("user_name", "User")
-            for k in [k for k in MathFunc.mathset.keys() if k not in MathFunc._reserved]: del MathFunc.mathset[k]
-            for var_name, value in data.get("variables", {}).items(): MathFunc.mathset[var_name] = value
+            password = data.get("password", None)
+
+            for k in [k for k in MathFunc.mathset.keys() if k not in MathFunc._reserved]: 
+                del MathFunc.mathset[k]
+            for var_name, value in data.get("variables", {}).items(): 
+                MathFunc.mathset[var_name] = value
+
             SessionManager.active_session_file = target
             print(f"{Fore.CYAN}Loaded session from '{os.path.basename(target)}' for user '{user_name}'.{Style.RESET_ALL}")
-            return user_name
-        except Exception as e:
+        
+            return {"user_name": user_name, "password": password}
+
+        except (json.JSONDecodeError, Exception) as e:
             print(f"{Fore.RED}Failed to load session: {e}{Style.RESET_ALL}")
-            return "User"
+            return default_data
+        
+# 100 lines pretty please?
+
+# there u go
