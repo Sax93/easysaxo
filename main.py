@@ -6,19 +6,49 @@ import sys, os, unicodedata, time, shlex, subprocess
 
 def install_package(package_name):
     try:
-        print(f"[Auto-Installer] Installing missing package: {package_name}...")
+        print(f"[Auto-Installer] Installing missing package via uv: {package_name}...")
+        # Uses `uv pip install` inside the active Python environment
         subprocess.run(
-            [sys.executable, "-m", "pip", "install", package_name],
+            [sys.executable, "-m", "uv", "pip", "install", package_name],
             check=True
         )
         print(f"[Auto-Installer] Successfully installed {package_name}!")
         return True
-    except subprocess.CalledProcessError as e:
-        print(f"[Auto-Installer] Failed to install {package_name}. Error: {e}")
-        return False
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        # Fallback to standard pip if uv isn't installed in the environment yet
+        print(f"[Auto-Installer] 'uv' failed or not found ({e}). Falling back to standard pip...")
+        try:
+            subprocess.run(
+                [sys.executable, "-m", "pip", "install", package_name],
+                check=True
+            )
+            print(f"[Auto-Installer] Successfully installed {package_name} via pip!")
+            return True
+        except subprocess.CalledProcessError as pip_error:
+            print(f"[Auto-Installer] Failed to install {package_name}. Error: {pip_error}")
+            return False
 
 def ensure_dependencies():
     """Checks required and optional dependencies, installing them if missing."""
+    
+    # ensure uv is available first before processing other packages
+    try:
+        __import__("uv")
+    except ImportError:
+        print("[Boot] 'uv' package installer not found. Installing 'uv'...")
+        subprocess.run([sys.executable, "-m", "pip", "install", "uv"], check=False)
+
+    try: # using uv
+        print("[Auto-Installer] Clearing out standard pygame to prevent conflicts...")
+        subprocess.run(
+            [sys.executable, "-m", "uv", "pip", "uninstall", "pygame"], 
+            check=False
+        )
+    except FileNotFoundError: #fallback to pip
+        subprocess.run(
+            [sys.executable, "-m", "pip", "uninstall", "pygame", "-y"], 
+            check=False
+        )
     
     required_packages = {
         "colorama": "colorama",
@@ -30,7 +60,7 @@ def ensure_dependencies():
         "psutil": "psutil",
         "cpuinfo": "py-cpuinfo",
         "speedtest": "speedtest-cli",
-        "pygame": "pygame",
+        "pygame": "pygame-ce",
     }
 
     for module_name, pip_name in required_packages.items():
@@ -47,7 +77,6 @@ def ensure_dependencies():
         except ImportError:
             print(f"[Boot] Optional dependency '{module_name}' not found.")
             install_package(pip_name)
-
 
 ensure_dependencies()
 
@@ -204,4 +233,4 @@ if __name__ == "__main__":
                 
             print(f"{Fore.RED}Wrong password, try again.{Style.RESET_ALL}\n")
 
-    Core(session_info=session_data) # yoooo im the 200th line yay
+    Core(session_info=session_data) # yoooo im the 224th line yay
