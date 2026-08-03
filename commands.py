@@ -322,7 +322,7 @@ def c_help(arg):
               f"{Fore.BLUE}random{Style.RESET_ALL}      : Shows a random {Fore.YELLOW}number{Style.RESET_ALL}.\n"
               f"{Fore.BLUE}delvar{Style.RESET_ALL}      : Deletes a specified {Fore.YELLOW}variable{Style.RESET_ALL}.\n"
               f"{Fore.BLUE}runloc{Style.RESET_ALL}      : Shows the {Fore.MAGENTA}current location{Style.RESET_ALL} of the script operations.\n"
-              f"{Fore.BLUE}check{Style.RESET_ALL}       : Checks if required{Fore.MAGENTA}script files{Style.RESET_ALL} exist where they shall be."
+              f"{Fore.BLUE}check{Style.RESET_ALL}       : Checks if required {Fore.MAGENTA}script files{Style.RESET_ALL} exist where they shall be.\n"
               f"{Fore.BLUE}filelst{Style.RESET_ALL}     : Lists files and folders in a directory.\n"
               f"{Fore.BLUE}fileloc{Style.RESET_ALL}     : Shows the {Fore.MAGENTA}location{Style.RESET_ALL} of a {Fore.RED}file{Style.RESET_ALL}.\n"
               f"{Fore.BLUE}filecrt{Style.RESET_ALL}     : Creates a {Fore.RED}file{Style.RESET_ALL} with specified extension.\n"
