@@ -3,6 +3,7 @@
 #=================================================
 
 # `telemetry.py` ONLY FOR TELEMETRY COMMAND DEFINING
+# dont worry, this is only shown to ur terminal and not publicly
 
 import time, socket, uuid, re
 import urllib.request

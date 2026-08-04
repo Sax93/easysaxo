@@ -32,14 +32,14 @@ class ComputerData:
                 print(f"Architecture: {Fore.CYAN}{info.get('arch', 'N/A')}{Style.RESET_ALL}")
                 print(f"L2 Cache: {Fore.CYAN}{info.get('l2_cache_size', 'N/A')}{Style.RESET_ALL}")
                 print(f"L3 Cache: {Fore.CYAN}{info.get('l3_cache_size', 'N/A')}{Style.RESET_ALL}")
-            except Exception: pass
+            except Exception as e: return e
 
         print(f"Cores: {Fore.BLUE}{psutil.cpu_count(logical=False)} Physical | {psutil.cpu_count(logical=True)} Logical{Style.RESET_ALL}")
         try:
             freq = psutil.cpu_freq()
             if freq:
                 print(f"Speed: {Fore.BLUE}{freq.current:.2f} MHz (Min: {freq.min:.2f} MHz, Max: {freq.max:.2f} MHz){Style.RESET_ALL}")
-        except Exception: pass
+        except Exception as e: return e
 
         print(f"Total CPU Usage: {Fore.BLUE}{psutil.cpu_percent(interval=0.0)}{Style.RESET_ALL}%")
         print(f"Core Usage: {Fore.BLUE}{psutil.cpu_percent(interval=0.2, percpu=True)}{Style.RESET_ALL}%")
@@ -78,7 +78,7 @@ class ComputerData:
                         print(f"  VRAM Used: {Fore.RED}{gpu.memoryUsed} MB ({gpu.memoryUtil*100:.1f}%){Style.RESET_ALL}")
                         print(f"  Temperature: {Fore.RED}{gpu.temperature} °C{Style.RESET_ALL}")
                     return
-            except Exception: pass
+            except Exception as e: return e
         
         try:
             if os.name == "nt":

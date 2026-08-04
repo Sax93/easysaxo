@@ -7,7 +7,7 @@ from esmodules.computer import ComputerData
 from esmodules.telemetry import TelemetryData
 from esmodules.dirloct import DirLocation, base_dir
 from esmodules.mathf import MathFunc
-from esmodules.misc import whats_new, hrs, StatusHandler, module_importing, required_modules, StHd
+from esmodules.misc import whats_new, hrs, StatusHandler, module_importing, required_modules, StHd, easysaxoLogo
 from esmodules.jsonregex import JsonData, RegexData
 from esmodules.medi import MediaData
 from esmodules.heavyholder import ThreadData, SessionManager
@@ -198,6 +198,7 @@ def e5():
     traceback(ranerror)
 
 # =========== ATTRIBUTES FOR 'GET' ===========
+
 @register_command("cpu", aliases=["processor"], registry=GET_REGISTRY, help_text="get cpu - Displays CPU details and usage statistics.")
 def g_cpu(): ComputerData.getcpu()
 
@@ -276,6 +277,9 @@ def g_appn(): print(f"App name: {Fore.CYAN}{easysaxo.name}{Style.RESET_ALL}")
 @register_command("appver", registry=GET_REGISTRY, help_text="get appver - Displays app version.")
 def g_appv(): print(f"App version: {Fore.CYAN}{easysaxo.ver}{Style.RESET_ALL}")
 
+@register_command("applogo", aliases=["appicon"], registry=GET_REGISTRY)
+def g_appl(): print(f"App logo:{Fore.LIGHTBLUE_EX}{easysaxoLogo}{Style.RESET_ALL}\n :3")
+
 @register_command("appdev", aliases=["developer", "creator", "devs", "dev"], registry=GET_REGISTRY)
 def g_appd():
     possible_devs = ["SXF", "SFX", "Your mom lol", developer]
@@ -290,7 +294,7 @@ def g_app(): print(f"App: {Fore.CYAN}{easysaxo.name} {easysaxo.ver}{Style.RESET_
 def g_uname(): print(f"Username: {Fore.CYAN}{ThreadData.current_user}{Style.RESET_ALL}.")
 
 @register_command("password", aliases=["pswd", "key"], registry=GET_REGISTRY, help_text="By privacy built-in configuration, you cannot get password.")
-def g_pswd(): print(f"{Fore.RED}You cannot get password.{Style.RESET_ALL}.")
+def g_pswd(): print(f"{Fore.RED}You cannot get password due to security protocols{Style.RESET_ALL}.")
 
 @register_command("attr", aliases=["attribute", "all"], registry=GET_REGISTRY, help_text="get attr - Fetches all telemetry and system specs.")
 def g_all():
@@ -335,6 +339,8 @@ def c_help(arg):
               f"{Fore.BLUE}regex{Style.RESET_ALL}       : Looks for {Fore.GREEN}patterns{Style.RESET_ALL} in a text.\n"
               f"{Fore.BLUE}playaudio{Style.RESET_ALL}   : Plays an {Fore.RED}audio file{Style.RESET_ALL} (specify the route).\n"
               f"{Fore.BLUE}stopaudio{Style.RESET_ALL}   : Stops the current {Fore.RED}audio file{Style.RESET_ALL}.\n"
+              f"{Fore.BLUE}render{Style.RESET_ALL}      : Renders and draws a specified {Fore.RED}image file{Style.RESET_ALL} (specify route).\n"
+              f"{Fore.BLUE}unins{Style.RESET_ALL}       : Guides to uninstall {Fore.LIGHTRED_EX}{easysaxo.name}{Style.RESET_ALL}.\n"
               f"{Fore.BLUE}exit{Style.RESET_ALL}        : Exit {Fore.CYAN}{easysaxo.name}{Style.RESET_ALL}.\n"
               f"\nRemember you can search for command's syntax and usage by using {Fore.GREEN}help <cmd/attr>{Style.RESET_ALL} :)")
     else:
@@ -349,12 +355,12 @@ def c_help(arg):
             print(f"{Fore.RED}No usage details found for '{arg}'. Type 'help' for options.{Style.RESET_ALL}")
 
 @register_command("exit", aliases=["quit"], help_text="exit - Saves session state and exits EasySaxo.")
-def c_exit(arg): pass
+def c_exit(arg): pass # we use 'pass' because `exit` cmd is already built in main.py
 
 @register_command("clear", aliases=["clr", "clrscr"], help_text="clear - Clears the terminal screen.")
 def c_clear(arg): os.system('cls' if os.name == 'nt' else 'clear')
 
-@register_command("save", help_text="save [filepath.json] - Saves the current session state and math variables.")
+@register_command("save", help_text="save [filepath.json] - Saves the current session state along with its storable data.")
 def c_save(arg): SessionManager.save_session(ThreadData.current_user, arg)
 
 @register_command("load", help_text="load <filepath.json> - Loads session state and variables from a file.")
@@ -364,10 +370,8 @@ def c_load(arg):
         if isinstance(session_info, dict):
             ThreadData.current_user = session_info.get("user_name", "User")
             ThreadData.current_pswd = session_info.get("password")
-        else:
-            ThreadData.current_user = session_info
-    else:
-        print(f"{Fore.RED}Usage: load <filepath.json>{Style.RESET_ALL}")
+        else: ThreadData.current_user = session_info
+    else: print(f"{Fore.RED}Usage: load <filepath.json>{Style.RESET_ALL}")
         
 @register_command("delvar", help_text="delvar <var_name> - Deletes a user-defined math variable.")
 def c_delvar(arg):
@@ -383,18 +387,18 @@ def c_del(arg):
 @register_command("get", help_text="get <attribute|subcommand> - Fetches system metrics, variables, or specs.")
 def c_get(arg): # Magic. Do not touch
     if not arg: print(f"{Fore.RED}Missing argument for 'get'. Type 'help' for options.{Style.RESET_ALL}")
-    elif arg.startswith("module "): 
+    elif arg.startswith("module "): # checks specified mod
         mtocheck = arg.split(maxsplit=1)[1]
         for mod in mtocheck.replace(",", " ").split():
             clean = mod.strip().lower()
             if clean in required_modules: StHd.print_status(f"Module {Fore.BLUE}{clean.upper()}{Style.RESET_ALL}", True)
             else: StHd.print_status(f"Module {Fore.BLUE}{clean.upper()}{Style.RESET_ALL}", False, "Not required")
-    elif arg == "module":
+    elif arg == "module": # checks all modules
         for mod in required_modules: StHd.print_status(f"Module {Fore.BLUE}{mod.upper()}{Style.RESET_ALL}", True)
     elif arg in GET_REGISTRY: GET_REGISTRY[arg]()
     else: MathFunc.getvar(arg)
 
-@register_command("runloc", help_text="runloc - Prints the current working directory path.")
+@register_command("runloc", aliases=["path", "location", "currentpath", "currentdir"], help_text="runloc - Prints the current working directory path.")
 def c_runloc(arg): DirLocation.runloc()
 
 @register_command("check", aliases=["allowance", "checkf", "filechk"], help_text="check - Checks if all script files exist and are available.")
@@ -436,7 +440,7 @@ def c_filerd(arg): DirLocation.filerd(arg) if arg else print(f"{Fore.RED}Missing
 @register_command("filedel", aliases=["deletef"], help_text="filedel <filepath> - Permanently removes a file from disk.")
 def c_filedel(arg): DirLocation.filedel(arg) if arg else print(f"{Fore.RED}Missing filepath.{Style.RESET_ALL}")
 
-@register_command("filewrt", aliases=["writef"], help_text="filewrt <filepath> <content> - Overwrites target file with text content.")
+@register_command("filewrt", aliases=["writef"], help_text="filewrt <filepath> <content> - [ONE LINE] Overwrites target file with text content.")
 def c_filewrt(arg):
     parts = arg.split(maxsplit=1) if arg else []
     if len(parts) == 2: DirLocation.filewrt(parts[0], parts[1])
@@ -457,21 +461,50 @@ def c_playaudio(arg): MediaData.playaudio(arg) if arg else print(f"{Fore.RED}Mis
 @register_command("stopaudio", help_text="stopaudio - Stops currently playing audio playback.")
 def c_stopaudio(arg): MediaData.stopaudio()
 
-@register_command("set", help_text="set name/password <new_name/new_password> | set var <var_name> <value> - Updates session username or math variables.\nNote: Username or password has to be one single word (e.g. Sax_93; cool-password.123)")
-def c_set(arg):
-    if not arg: print(f"{Fore.RED}Usage: set name/password <new_name/new_password> OR set var <var_name> <value>{Style.RESET_ALL}")
+@register_command("render", aliases=["asciiart", "art"], help_text="render <imagepath> [columnnum] - Renders an image in ASCII.")
+def c_render(arg):
+    if not arg:
+        print(f"{Fore.RED}Usage: render <imgpath> [colnum]{Style.RESET_ALL}")
+        return
+    parts = arg.split()
+    imgpath = parts[0]
+    colnum = parts[1] if len(parts) > 1 else "80"
+    MediaData.render(imgpath, colnum)
+
+@register_command("set", help_text="set <varfeature> <val> - Updates session settings or math variables.\nNote: Username/password has to be one single word (e.g. Sax_93; cool-password.123)")
+def c_set(arg): # prob hardest cmd
+    if not arg: print(f"{Fore.RED}Usage: set name/password <new_name/new_password>\nset var <var_name> <value>\nset cmdmatch es/sys{Style.RESET_ALL}")
     else:
         parts = arg.split(maxsplit=2)
+        # edit username
         if parts[0].lower() == "name" and len(parts) >= 2:
             ThreadData.current_user = parts[1]
             print(f"User name replaced to {Fore.GREEN}{parts[1]}{Style.RESET_ALL}.")
             SessionManager.save_session(ThreadData.current_user)
+            
+        # edit/add variable
         elif parts[0].lower() in ["var", "variable"] and len(parts) == 3:
             MathFunc.set_var(parts[1], parts[2]); SessionManager.save_session(ThreadData.current_user)
+        
+        # set new password
         elif parts[0].lower() in ["password", "key", "pswd"] and len(parts) >= 2:
             ThreadData.current_pswd = parts[1]
             print(f"Password assigned. It will load {Fore.MAGENTA}next session{Style.RESET_ALL}.")
             SessionManager.save_session(ThreadData.current_user)
+        
+        # set command match
+        elif parts[0].lower() in ["cmdmatch", "cmdrun", "mode"] and len(parts) >= 2:
+            mode_arg = parts[1].lower()
+            if mode_arg in ["sys", "path", "device"]: # system
+                ThreadData.target_mode = "system"
+                print(f"{Fore.LIGHTGREEN_EX}Default execution mode set to: System Shell{Style.RESET_ALL}")
+            elif mode_arg in ["es", "app", "local"]: # app
+                ThreadData.target_mode = "easysaxo"
+                print(f"{Fore.LIGHTCYAN_EX}Default execution mode set to: EasySaxo Internal{Style.RESET_ALL}")
+            else: # auto
+                ThreadData.target_mode = "auto"
+                print(f"{Fore.LIGHTYELLOW_EX}Default execution mode set to: Auto (EasySaxo -> System Fallback){Style.RESET_ALL}")
+                
         else: print(f"{Fore.RED}Unknown/malformed set subcommand.{Style.RESET_ALL}")
 
 @register_command("reset", help_text="reset <name/password>")
@@ -479,11 +512,11 @@ def c_reset(arg):
     if not arg: print(f"{Fore.RED}Usage: reset <name/password>{Style.RESET_ALL}")
     else:
         parts = arg.strip().split()
-        if parts[0].lower() in ["name", "username"] and len(parts) == 1:
+        if parts[0].lower() in ["name", "username"] and len(parts) == 1: # set username as User
             ThreadData.current_user = "User"
             print(f"User name set to {Fore.GREEN}User{Style.RESET_ALL}")
             SessionManager.save_session(ThreadData.current_user)
-        elif parts[0].lower() in ["password", "pswd", "key"] and len(parts) == 1:
+        elif parts[0].lower() in ["password", "pswd", "key"] and len(parts) == 1: # erase current password
             ThreadData.current_pswd = None
             print("Password cleared successfully.")
             SessionManager.save_session(ThreadData.current_user)
@@ -510,17 +543,16 @@ def c_rand(arg):
     else: MathFunc.rtool()
 
 @register_command("mathhelp", aliases=["mhelp"], help_text="mathhelp <attribute> - Displays help details for a specific MathSet function or constant.")
-def c_mathhelp(arg):
+def c_mathhelp(arg): # useless though
     if not arg:
         print(f"{Fore.RED}Usage: mathhelp <attribute>{Style.RESET_ALL}")
         print(f"Available attributes: {Fore.CYAN}{', '.join(MathFunc.mathset.keys())}{Style.RESET_ALL}")
-    else:
-        MathFunc.help_attribute(arg)
+    else: MathFunc.help_attribute(arg)
 
 @register_command("time", aliases=["date"], help_text="time - Displays current system date and time.")
 def c_time(arg): hrs()
 
-@register_command("whatsnew", aliases=["news"], help_text="whatsnew - Displays software changelog highlights.")
+@register_command("whatsnew", aliases=["news", "upd", "updates", "changes"], help_text="whatsnew - Displays software changelog highlights.")
 def c_whatsnew(arg): whats_new()
 
 @register_command("unins", aliases=["uninstall", "selfdel", "sdelete"], help_text="unins - Guider to uninstall the program.")
@@ -539,19 +571,14 @@ def b_unins(arg=None):
             f.write("Thanks for using EasySaxo! We'll miss you. :(\n")
 
         try:
-            if os.name == 'nt':
-                os.startfile(note_path)
-            elif sys.platform == 'darwin':
-                subprocess.Popen(["open", note_path])
-            else:
-                subprocess.Popen(["xdg-open", note_path])
-        except Exception as e:
-            print(f"Could not open note automatically: {e}")
+            if os.name == 'nt': os.startfile(note_path)
+            elif sys.platform == 'darwin': subprocess.Popen(["open", note_path])
+            else: subprocess.Popen(["xdg-open", note_path])
+        except Exception as e: print(f"Could not open note automatically: {e}")
 
         for folder in ["esmodules", "__pycache__", ".vscode"]:
             folder_path = os.path.join(base_dir, folder)
-            if os.path.exists(folder_path):
-                shutil.rmtree(folder_path, ignore_errors=True)
+            if os.path.exists(folder_path): shutil.rmtree(folder_path, ignore_errors=True)
 
         files_to_delete = [
             "config.py", "session.json", "translations.json", 
@@ -561,10 +588,8 @@ def b_unins(arg=None):
         for file in files_to_delete:
             file_path = os.path.join(base_dir, file)
             if os.path.exists(file_path):
-                try:
-                    os.remove(file_path)
-                except Exception:
-                    pass # unless python crashes here
+                try: os.remove(file_path)
+                except Exception: pass # unless python crashes here
 
         print("Uninstalled successfully.")
         sys.exit(0) # Force exit

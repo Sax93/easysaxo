@@ -22,6 +22,7 @@ except ImportError:
 class ThreadData:
     current_user = "User"
     current_pswd = None
+    target_mode = "auto"
     # why storing this here? to make ezsaxo less comprehensible
 
     @staticmethod

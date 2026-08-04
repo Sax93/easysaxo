@@ -64,10 +64,8 @@ class DirLocation:
             is_init = file.endswith("__init__.py")
             is_valid_size = is_init or os.path.getsize(resolved_path) > 0
 
-            if is_valid_size:
-                print(f"File exists: {Fore.GREEN}{file}{Style.RESET_ALL}")
-            else:
-                print(f"Empty file (expected non-empty): {Fore.YELLOW}{file}{Style.RESET_ALL}")
+            if is_valid_size: print(f"File exists: {Fore.GREEN}{file}{Style.RESET_ALL}")
+            else: print(f"Empty file (expected non-empty): {Fore.YELLOW}{file}{Style.RESET_ALL}")
     
     @staticmethod
     def filesz(filepath):
